@@ -1,0 +1,39 @@
+<mat-nav-list class="sidebar-list">
+  <a
+    mat-list-item
+    routerLink="/admin/settings"
+    #settingsRla="routerLinkActive"
+    routerLinkActive="active-link"
+    [activated]="settingsRla.isActive"
+    (click)="onNavigate()"
+  >
+    <mat-icon matListItemIcon>settings</mat-icon>
+    {{ 'SIDEBAR.RESTAURANT' | t }}
+  </a>
+  <a
+    mat-list-item
+    routerLink="/admin/categories"
+    #categoriesRla="routerLinkActive"
+    routerLinkActive="active-link"
+    [activated]="categoriesRla.isActive"
+    (click)="onNavigate()"
+  >
+    <mat-icon matListItemIcon>category</mat-icon>
+    {{ 'SIDEBAR.CATEGORIES' | t }}
+  </a>
+  <a
+    mat-list-item
+    routerLink="/admin/items"
+    #itemsRla="routerLinkActive"
+    routerLinkActive="active-link"
+    [activated]="itemsRla.isActive"
+    (click)="onNavigate()"
+  >
+    <mat-icon matListItemIcon>restaurant_menu</mat-icon>
+    {{ 'SIDEBAR.ITEMS' | t }}
+  </a>
+  <a mat-list-item routerLink="/login" (click)="onNavigate()">
+    <mat-icon matListItemIcon>logout</mat-icon>
+    {{ 'SIDEBAR.LOGOUT' | t }}
+  </a>
+</mat-nav-list>

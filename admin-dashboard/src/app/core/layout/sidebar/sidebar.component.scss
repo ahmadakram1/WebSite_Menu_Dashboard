@@ -1,0 +1,27 @@
+.sidebar-list {
+  padding: 14px 12px;
+  background: #ffffff;
+}
+
+.sidebar-list .mat-mdc-list-item {
+  border-radius: 14px;
+  margin: 6px 0;
+  padding-inline: 14px;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sidebar-list .mat-mdc-list-item:hover {
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.sidebar-list .active-link {
+  background: rgba(59, 130, 246, 0.14);
+  color: #1d4ed8;
+  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+.sidebar-list .mat-icon {
+  margin-inline-end: 12px;
+  color: inherit;
+}

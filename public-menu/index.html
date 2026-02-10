@@ -1,0 +1,1037 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu</title>
+  <link id="favicon" rel="icon" type="image/x-icon" href="favicon.ico" />
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f6f8;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #0f766e;
+      --accent-2: #14b8a6;
+      --border: #e5e7eb;
+      --shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+      --shadow-soft: 0 10px 24px rgba(15, 23, 42, 0.06);
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 14px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    main.page-content {
+      flex: 1;
+    }
+    body.dark {
+      --bg: #0f172a;
+      --card: #111827;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #2dd4bf;
+      --accent-2: #14b8a6;
+      --border: #1f2937;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .container > * + * {
+      margin-top: 16px;
+    }
+    .mat-toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding: 14px 18px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(120deg, var(--card), rgba(20, 184, 166, 0.12));
+      box-shadow: var(--shadow-soft);
+    }
+    .toolbar-left {
+      justify-self: start;
+    }
+    .toolbar-center {
+      justify-self: center;
+    }
+    .toolbar-right {
+      justify-self: end;
+    }
+    #logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: var(--card);
+      border: 2px solid rgba(20, 184, 166, 0.3);
+    }
+    #restaurant-name {
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 0.2px;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .icon-button {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+    .icon-button .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+    }
+    .icon-button svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+    .mat-button {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 13px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .mat-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+      border-color: transparent;
+    }
+    .instagram-fab,
+    .whatsapp-fab {
+      position: fixed;
+      left: 20px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: #25d366;
+      color: #ffffff;
+      box-shadow: 0 16px 30px rgba(37, 211, 102, 0.35);
+      z-index: 1100;
+      text-decoration: none;
+      border: none;
+    }
+    .instagram-fab {
+      bottom: 84px;
+      background: radial-gradient(circle at 30% 110%, #feda75 0%, #fa7e1e 25%, #d62976 50%, #962fbf 75%, #4f5bd5 100%);
+      box-shadow: 0 16px 30px rgba(214, 41, 118, 0.3);
+    }
+    .whatsapp-fab {
+      bottom: 20px;
+    }
+    .instagram-fab svg,
+    .whatsapp-fab svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+    .instagram-fab.show,
+    .whatsapp-fab.show {
+      display: inline-flex;
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .menu-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tab-button {
+      border: 1px solid transparent;
+      background: var(--card);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .tab-button:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+    .tab-button.active {
+      background: var(--accent);
+      color: #ffffff;
+    }
+    .search-bar .mat-form-field {
+      flex: 1;
+    }
+    .mat-form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .mat-input-element {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+    .category-grid.hidden {
+      display: none;
+    }
+    .category-card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      min-height: 180px;
+      box-shadow: var(--shadow-soft);
+    }
+    .category-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: transparent;
+    }
+    .category-card.active {
+      border-color: transparent;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .category-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%);
+      padding: 0;
+    }
+    .category-card .category-info {
+      display: grid;
+      gap: 6px;
+      text-align: center;
+      margin-top: 2px;
+    }
+    .category-title {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .category-count {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+    .items-grid.hidden {
+      display: none;
+    }
+    .mat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: row-reverse;
+      min-height: 150px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .mat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      border-color: transparent;
+    }
+    .mat-card img {
+      width: 40%;
+      min-width: 140px;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      background: #e2e8f0;
+      padding: 0;
+    }
+    .mat-card-content {
+      padding: 14px 16px;
+      display: grid;
+      gap: 10px;
+      width: 60%;
+    }
+    .mat-card-title {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .item-desc {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      min-height: 36px;
+    }
+    .item-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 2px;
+    }
+    .item-price {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .item-category {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--card);
+      white-space: nowrap;
+    }
+    .empty {
+      color: var(--muted);
+      text-align: center;
+      padding: 32px 0;
+    }
+    .empty.hidden {
+      display: none;
+    }
+
+    .dialog-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+    .dialog-backdrop.open {
+      display: flex;
+    }
+    .dialog {
+      width: min(980px, 100%);
+      max-height: 85vh;
+      overflow: hidden;
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      box-shadow: 0 30px 70px rgba(15, 23, 42, 0.3);
+    }
+    .dialog-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .dialog-title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .dialog-body {
+      padding: 16px 18px 20px;
+      overflow: auto;
+    }
+    .dialog-close {
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .spinner-wrap {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1200;
+    }
+    .footer-note {
+      margin-top: auto;
+      padding: 16px 0 10px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    body.dark .spinner-wrap {
+      background: rgba(2, 6, 23, 0.6);
+    }
+    .spinner-wrap.active {
+      display: flex;
+    }
+    .spinner {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 4px solid rgba(15, 23, 42, 0.15);
+      border-top-color: var(--accent);
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    body.rtl {
+      direction: rtl;
+    }
+    body.rtl .search-bar {
+      flex-direction: row;
+    }
+    body.rtl .category-card {
+      text-align: right;
+    }
+    body.rtl .item-meta {
+      flex-direction: row-reverse;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 12px; }
+      .mat-toolbar { flex-direction: row; align-items: center; }
+      body.rtl .mat-toolbar { align-items: center; }
+      .search-bar { flex-direction: row; }
+      body.rtl .search-bar { flex-direction: row; }
+      .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .items-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    }
+    @media (min-width: 992px) {
+      .items-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-content">
+  <div class="container">
+    <div class="mat-toolbar">
+      <div id="restaurant-name" class="toolbar-left"></div>
+      <div class="toolbar-center">
+        <img id="logo" alt="Logo" />
+      </div>
+      <div class="actions toolbar-right">
+        <button id="theme-toggle" class="mat-button icon-button" aria-label="Theme"></button>
+        <button id="language-toggle" class="mat-button"></button>
+      </div>
+    </div>
+
+    <div class="menu-actions">
+      <button id="menu-tab" class="tab-button active">Our Menu</button>
+      <button id="all-items-tab" class="tab-button">All Items</button>
+    </div>
+
+    <div class="search-bar">
+      <div class="mat-form-field">
+        <input id="search" class="mat-input-element" type="search" placeholder="Search" />
+      </div>
+      <button id="clear" class="mat-button">Clear</button>
+    </div>
+
+    <div id="categories" class="category-grid"></div>
+
+    <div id="items" class="items-grid hidden"></div>
+    <div id="empty" class="empty hidden" hidden>No items found.</div>
+  </div>
+  <div class="footer-note">© 2026 جميع الحقوق محفوظة</div>
+  </main>
+
+  <div id="spinner" class="spinner-wrap" aria-hidden="true">
+    <div class="spinner" role="status" aria-label="Loading"></div>
+  </div>
+
+  <a
+    id="instagram-link"
+    class="instagram-fab"
+    href="#"
+    target="_blank"
+    rel="noopener"
+    aria-label="Instagram"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm10 2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm-5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm5.25-3.4a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"/>
+    </svg>
+  </a>
+  <a
+    id="whatsapp-link"
+    class="whatsapp-fab"
+    href="#"
+    target="_blank"
+    rel="noopener"
+    aria-label="WhatsApp"
+  >
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3c-6.627 0-12 5.373-12 12 0 2.115.552 4.186 1.602 6.015L3 29l8.2-2.523A11.9 11.9 0 0 0 16 28c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 21.813a9.79 9.79 0 0 1-4.98-1.366l-.356-.211-4.854 1.495 1.586-4.732-.232-.37A9.774 9.774 0 1 1 16 24.813zm5.436-7.316c-.297-.149-1.753-.866-2.025-.965-.273-.099-.472-.148-.67.149-.198.297-.768.965-.941 1.164-.173.198-.347.223-.644.074-.297-.149-1.253-.462-2.386-1.472-.882-.786-1.478-1.758-1.652-2.055-.173-.297-.018-.457.13-.606.134-.133.297-.347.446-.52.149-.173.198-.297.297-.495.099-.198.05-.372-.025-.52-.074-.149-.669-1.611-.916-2.206-.241-.579-.486-.5-.67-.51h-.57c-.198 0-.52.074-.792.372-.272.297-1.04 1.015-1.04 2.478 0 1.462 1.065 2.875 1.214 3.074.148.198 2.095 3.2 5.074 4.488.709.306 1.263.489 1.694.625.712.226 1.36.194 1.873.118.571-.085 1.753-.716 2.001-1.408.248-.693.248-1.287.173-1.408-.074-.124-.272-.198-.57-.347z"/>
+    </svg>
+  </a>
+
+  <div id="items-dialog" class="dialog-backdrop" aria-hidden="true">
+    <div class="dialog">
+      <div class="dialog-header">
+        <div id="dialog-title" class="dialog-title"></div>
+        <button id="dialog-close" class="dialog-close" aria-label="Close">×</button>
+      </div>
+      <div class="dialog-body">
+        <div id="dialog-items" class="items-grid"></div>
+        <div id="dialog-empty" class="empty" hidden>No items found.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const storage = {
+      get(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch {
+          return fallback;
+        }
+      },
+      set(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch {}
+      }
+    };
+
+    const localSettings = storage.get('settings', {
+      name_ar: '',
+      name_en: '',
+      logo_data_url: '',
+      whatsapp: '',
+      instagram: '',
+      theme_bg: '',
+      theme_card: '',
+      theme_text: '',
+      theme_muted: '',
+      theme_accent: '',
+      theme_accent2: '',
+      theme_border: '',
+      font_family: ''
+    });
+    let categories = storage.get('categories', []);
+    let items = storage.get('items', []);
+
+    const API_BASE =
+      new URLSearchParams(window.location.search).get('api_base') ||
+      localStorage.getItem('api_base') ||
+      'http://localhost/StoreMenu/backend/public';
+
+    const state = {
+      language: (localStorage.getItem('admin_language') || 'en') === 'ar' ? 'ar' : 'en',
+      selectedCategoryId: 'all',
+      query: '',
+      showAllItems: false,
+      restaurantId: '1',
+      theme: localStorage.getItem('menu_theme') === 'dark' ? 'dark' : 'light'
+    };
+
+    const labels = {
+      en: {
+        all: 'All',
+        search: 'Search by name',
+        clear: 'Clear',
+        empty: 'No items found.',
+        menuTab: 'Our Menu',
+        allItemsTab: 'All Items',
+        currency: 'AED',
+        themeLight: 'Light',
+        themeDark: 'Dark',
+        whatsapp: 'WhatsApp'
+      },
+      ar: {
+        all: 'الكل',
+        search: 'ابحث بالاسم',
+        clear: 'مسح',
+        empty: 'لا توجد عناصر.',
+        menuTab: 'المنيو',
+        allItemsTab: 'كل الأصناف',
+        currency: 'درهم',
+        themeLight: 'فاتح',
+        themeDark: 'داكن',
+        whatsapp: 'واتساب'
+      }
+    };
+
+    const logoEl = document.getElementById('logo');
+    const faviconEl = document.getElementById('favicon');
+    const nameEl = document.getElementById('restaurant-name');
+    const categoriesEl = document.getElementById('categories');
+    const itemsEl = document.getElementById('items');
+    const emptyEl = document.getElementById('empty');
+    const dialogEl = document.getElementById('items-dialog');
+    const dialogTitleEl = document.getElementById('dialog-title');
+    const dialogItemsEl = document.getElementById('dialog-items');
+    const dialogEmptyEl = document.getElementById('dialog-empty');
+    const dialogCloseEl = document.getElementById('dialog-close');
+    const spinnerEl = document.getElementById('spinner');
+    const instagramEl = document.getElementById('instagram-link');
+    const whatsappEl = document.getElementById('whatsapp-link');
+    const searchEl = document.getElementById('search');
+    const clearEl = document.getElementById('clear');
+    const menuTabEl = document.getElementById('menu-tab');
+    const allItemsTabEl = document.getElementById('all-items-tab');
+    const toggleEl = document.getElementById('language-toggle');
+    const themeToggleEl = document.getElementById('theme-toggle');
+
+    function textFor(entity, key) {
+      return state.language === 'ar' ? entity[`${key}_ar`] : entity[`${key}_en`];
+    }
+
+    function applyLanguage() {
+      const lang = state.language;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.body.classList.toggle('rtl', lang === 'ar');
+      searchEl.placeholder = labels[lang].search;
+      clearEl.textContent = labels[lang].clear;
+      emptyEl.textContent = labels[lang].empty;
+      dialogEmptyEl.textContent = labels[lang].empty;
+      toggleEl.textContent = lang === 'ar' ? 'EN' : 'AR';
+      themeToggleEl.innerHTML =
+        state.theme === 'dark'
+          ? '<span class="icon" aria-hidden="true">☾</span>'
+          : '<span class="icon" aria-hidden="true">☀</span>';
+      menuTabEl.textContent = labels[lang].menuTab;
+      allItemsTabEl.textContent = labels[lang].allItemsTab;
+      const instagramValue = (localSettings.instagram || '').trim();
+      if (instagramValue) {
+        const normalized = normalizeInstagram(instagramValue);
+        instagramEl.href = normalized.href;
+        instagramEl.setAttribute('aria-label', normalized.label);
+        instagramEl.classList.add('show');
+      } else {
+        instagramEl.classList.remove('show');
+      }
+      const whatsappValue = (localSettings.whatsapp || '').trim();
+      if (whatsappValue) {
+        const clean = whatsappValue.replace(/[^\d+]/g, '');
+        whatsappEl.href = `https://wa.me/${clean}`;
+        whatsappEl.classList.add('show');
+      } else {
+        whatsappEl.classList.remove('show');
+      }
+      nameEl.textContent = textFor(localSettings, 'name') || 'Restaurant';
+      document.title = (localSettings.name_en || 'Menu').trim() || 'Menu';
+      updateFavicon();
+      applyThemeSettings();
+      renderCategories();
+      renderItems();
+    }
+
+    function applyTheme() {
+      document.body.classList.toggle('dark', state.theme === 'dark');
+    }
+
+    function showSpinner() {
+      spinnerEl.classList.add('active');
+      spinnerEl.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideSpinner() {
+      spinnerEl.classList.remove('active');
+      spinnerEl.setAttribute('aria-hidden', 'true');
+    }
+
+    let isLoading = false;
+    let pendingCategoryId = null;
+    let pendingDialogTitle = '';
+
+    function applyCategorySelection(categoryId, titleText) {
+      state.selectedCategoryId =
+        categoryId === 'all' ? 'all' : normalizeCategoryId(categoryId);
+      state.showAllItems = false;
+      renderCategories();
+      renderItems();
+      openDialog(titleText);
+    }
+
+    function handleCategorySelection(categoryId, titleText) {
+      if (isLoading) {
+        pendingCategoryId = categoryId;
+        pendingDialogTitle = titleText;
+        showSpinner();
+        return;
+      }
+      applyCategorySelection(categoryId, titleText);
+    }
+
+    function openDialog(titleText) {
+      dialogTitleEl.textContent = titleText;
+      dialogEl.classList.add('open');
+      dialogEl.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeDialog() {
+      dialogEl.classList.remove('open');
+      dialogEl.setAttribute('aria-hidden', 'true');
+    }
+
+    function normalizeInstagram(value) {
+      const trimmed = value.trim();
+      const clean = trimmed.replace(/^@/, '').trim();
+      if (/^https?:\/\//i.test(clean)) {
+        return { href: clean, label: 'Instagram' };
+      }
+      if (/^www\./i.test(clean)) {
+        return { href: `https://${clean}`, label: 'Instagram' };
+      }
+      return { href: `https://instagram.com/${clean}`, label: 'Instagram' };
+    }
+
+    function updateFavicon() {
+      if (!faviconEl) {
+        return;
+      }
+      const logoUrl = (localSettings.logo_data_url || '').trim();
+      if (logoUrl) {
+        faviconEl.setAttribute('href', logoUrl);
+        faviconEl.setAttribute('type', 'image/png');
+      } else {
+        faviconEl.setAttribute('href', 'favicon.ico');
+        faviconEl.setAttribute('type', 'image/x-icon');
+      }
+    }
+
+    function applyThemeSettings() {
+      const root = document.documentElement;
+      const themeMap = [
+        ['--bg', localSettings.theme_bg],
+        ['--card', localSettings.theme_card],
+        ['--text', localSettings.theme_text],
+        ['--muted', localSettings.theme_muted],
+        ['--accent', localSettings.theme_accent],
+        ['--accent-2', localSettings.theme_accent2],
+        ['--border', localSettings.theme_border]
+      ];
+      themeMap.forEach(([key, value]) => {
+        if (value) {
+          root.style.setProperty(key, value);
+        } else {
+          root.style.removeProperty(key);
+        }
+      });
+      if (localSettings.font_family) {
+        root.style.fontFamily = localSettings.font_family;
+      } else {
+        root.style.removeProperty('font-family');
+      }
+    }
+
+
+    function renderCategories() {
+      const countByCategory = items.reduce((acc, item) => {
+        const key = item.category_id ?? 'none';
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+      }, {});
+
+      categoriesEl.innerHTML = '';
+      categories.forEach((category) => {
+        const normalizedId = normalizeCategoryId(category.id);
+        const card = document.createElement('div');
+        card.className =
+          'category-card' + (state.selectedCategoryId === normalizedId ? ' active' : '');
+        const image = document.createElement('img');
+        const imageUrl =
+          category.image_data_url ||
+          (category.image ? `${API_BASE}/../uploads/${category.image}` : '');
+        image.src = imageUrl;
+        image.alt = textFor(category, 'name') || '';
+        const info = document.createElement('div');
+        info.className = 'category-info';
+        const title = document.createElement('div');
+        title.className = 'category-title';
+        title.textContent = textFor(category, 'name') || '-';
+        const count = document.createElement('div');
+        count.className = 'category-count';
+        const total = countByCategory[category.id] || 0;
+        count.textContent = `${total} ${state.language === 'ar' ? 'عنصر' : 'items'}`;
+        if (imageUrl) {
+          card.append(image);
+        }
+        info.append(title, count);
+        card.append(info);
+        card.onclick = () => {
+          handleCategorySelection(normalizedId, textFor(category, 'name') || labels[state.language].all);
+        };
+        categoriesEl.appendChild(card);
+      });
+    }
+
+    function normalizeCategoryId(value) {
+      if (value === null || value === undefined || value === '') {
+        return null;
+      }
+      const num = Number(value);
+      return Number.isNaN(num) ? null : num;
+    }
+
+    function categoryNameById(categoryId) {
+      const category = categories.find((item) => normalizeCategoryId(item.id) === categoryId);
+      return category ? textFor(category, 'name') : '';
+    }
+
+    function renderItems() {
+      const query = state.query.trim().toLowerCase();
+      const isSearching = query.length > 0;
+      const showItemsList = isSearching || state.showAllItems;
+      const filtered = items.filter((item) => {
+        const itemCategoryId = normalizeCategoryId(item.category_id);
+        const matchesCategory =
+          isSearching || state.showAllItems ||
+          state.selectedCategoryId === 'all' || itemCategoryId === state.selectedCategoryId;
+        if (!matchesCategory) {
+          return false;
+        }
+        if (!query) {
+          return true;
+        }
+        const nameAr = (item.name_ar || '').toLowerCase();
+        const nameEn = (item.name_en || '').toLowerCase();
+        const descAr = (item.description_ar || '').toLowerCase();
+        const descEn = (item.description_en || '').toLowerCase();
+        const price = item.price !== null && item.price !== undefined ? String(item.price) : '';
+        return (
+          nameAr.includes(query) ||
+          nameEn.includes(query) ||
+          descAr.includes(query) ||
+          descEn.includes(query) ||
+          price.includes(query)
+        );
+      });
+
+      if (showItemsList) {
+        closeDialog();
+        categoriesEl.classList.add('hidden');
+        itemsEl.classList.remove('hidden');
+        itemsEl.innerHTML = '';
+      } else {
+        categoriesEl.classList.remove('hidden');
+        itemsEl.classList.add('hidden');
+        itemsEl.innerHTML = '';
+        emptyEl.hidden = true;
+        dialogItemsEl.innerHTML = '';
+      }
+
+      const targetEl = showItemsList ? itemsEl : dialogItemsEl;
+      targetEl.innerHTML = '';
+      filtered
+        .slice()
+        .sort((a, b) => {
+          const aCat = normalizeCategoryId(a.category_id) ?? 0;
+          const bCat = normalizeCategoryId(b.category_id) ?? 0;
+          if (aCat !== bCat) {
+            return aCat - bCat;
+          }
+          const aName = (textFor(a, 'name') || '').toLowerCase();
+          const bName = (textFor(b, 'name') || '').toLowerCase();
+          return aName.localeCompare(bName);
+        })
+        .forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'mat-card';
+        const img = document.createElement('img');
+        const imageUrl =
+          item.image_data_url || (item.image ? `${API_BASE}/../uploads/${item.image}` : '');
+        img.src = imageUrl;
+        img.alt = textFor(item, 'name') || '';
+        const body = document.createElement('div');
+        body.className = 'mat-card-content';
+        const title = document.createElement('div');
+        title.className = 'mat-card-title';
+        title.textContent = textFor(item, 'name') || '-';
+        const desc = document.createElement('div');
+        desc.className = 'item-desc';
+        desc.textContent = textFor(item, 'description') || '';
+        const meta = document.createElement('div');
+        meta.className = 'item-meta';
+        const price = document.createElement('div');
+        price.className = 'item-price';
+        price.textContent = item.price ? `${item.price} ${labels[state.language].currency}` : '-';
+        const categoryTag = document.createElement('div');
+        categoryTag.className = 'item-category';
+        categoryTag.textContent = categoryNameById(normalizeCategoryId(item.category_id)) || '-';
+        meta.append(price, categoryTag);
+        body.append(title, desc, meta);
+        if (imageUrl) {
+          card.append(img);
+        }
+        card.append(body);
+          targetEl.appendChild(card);
+        });
+
+      if (showItemsList) {
+        emptyEl.hidden = filtered.length > 0;
+      } else {
+        dialogEmptyEl.hidden = filtered.length > 0;
+      }
+
+      menuTabEl.classList.toggle('active', !state.showAllItems);
+      allItemsTabEl.classList.toggle('active', state.showAllItems);
+    }
+
+    searchEl.addEventListener('input', (event) => {
+      state.query = event.target.value || '';
+      renderItems();
+    });
+
+    clearEl.addEventListener('click', () => {
+      state.query = '';
+      state.showAllItems = false;
+      searchEl.value = '';
+      renderItems();
+    });
+
+    menuTabEl.addEventListener('click', () => {
+      state.showAllItems = false;
+      renderCategories();
+      renderItems();
+    });
+
+    allItemsTabEl.addEventListener('click', () => {
+      state.selectedCategoryId = 'all';
+      state.query = '';
+      searchEl.value = '';
+      state.showAllItems = true;
+      renderCategories();
+      renderItems();
+    });
+
+    toggleEl.addEventListener('click', () => {
+      state.language = state.language === 'ar' ? 'en' : 'ar';
+      localStorage.setItem('admin_language', state.language);
+      applyLanguage();
+    });
+
+    themeToggleEl.addEventListener('click', () => {
+      state.theme = state.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('menu_theme', state.theme);
+      applyTheme();
+      applyLanguage();
+    });
+
+    dialogCloseEl.addEventListener('click', closeDialog);
+    dialogEl.addEventListener('click', (event) => {
+      if (event.target === dialogEl) {
+        closeDialog();
+      }
+    });
+
+    async function loadFromApi() {
+      isLoading = true;
+      showSpinner();
+      try {
+        state.restaurantId =
+          new URLSearchParams(window.location.search).get('restaurant_id') || '1';
+        const response = await fetch(`${API_BASE}/menu.php?restaurant_id=${state.restaurantId}`);
+        if (!response.ok) {
+          throw new Error('API error');
+        }
+        const data = await response.json();
+        if (data.restaurant) {
+          localSettings.name_ar = data.restaurant.name_ar || '';
+          localSettings.name_en = data.restaurant.name_en || '';
+          localSettings.logo_data_url = data.restaurant.logo
+            ? `${API_BASE}/../uploads/${data.restaurant.logo}`
+            : '';
+          localSettings.whatsapp = data.restaurant.whatsapp || '';
+          localSettings.instagram = data.restaurant.instagram || '';
+          localSettings.theme_bg = data.restaurant.theme_bg || '';
+          localSettings.theme_card = data.restaurant.theme_card || '';
+          localSettings.theme_text = data.restaurant.theme_text || '';
+          localSettings.theme_muted = data.restaurant.theme_muted || '';
+          localSettings.theme_accent = data.restaurant.theme_accent || '';
+          localSettings.theme_accent2 = data.restaurant.theme_accent2 || '';
+          localSettings.theme_border = data.restaurant.theme_border || '';
+          localSettings.font_family = data.restaurant.font_family || '';
+        }
+        categories = data.categories || [];
+        items = data.items || [];
+      } catch {
+        // keep localStorage data
+      } finally {
+        isLoading = false;
+        hideSpinner();
+        if (pendingDialogTitle) {
+          applyCategorySelection(pendingCategoryId ?? 'all', pendingDialogTitle);
+          pendingCategoryId = null;
+          pendingDialogTitle = '';
+        }
+      }
+    }
+
+    logoEl.src = localSettings.logo_data_url || '';
+    updateFavicon();
+    applyTheme();
+    loadFromApi().finally(() => {
+      logoEl.src = localSettings.logo_data_url || '';
+      applyLanguage();
+    });
+  </script>
+</body>
+</html>

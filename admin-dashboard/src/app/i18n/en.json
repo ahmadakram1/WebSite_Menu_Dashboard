@@ -1,0 +1,79 @@
+{
+  "APP": {
+    "LANGUAGE": "Language"
+  },
+  "LOGIN": {
+    "TITLE": "Admin Login",
+    "SUBTITLE": "Welcome back! Please sign in to manage your menu.",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "REMEMBER": "Remember me",
+    "SUBMIT": "Login"
+  },
+  "DASHBOARD": {
+    "TITLE": "Dashboard",
+    "HOME": "Dashboard Home",
+    "SETTINGS": "Menu Settings",
+    "CATEGORIES": "Categories",
+    "ITEMS": "Items"
+  },
+  "COMMON": {
+    "ADD": "Add",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "DELETE_ACTION": "Delete",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "SAVED": "Saved successfully",
+    "ERROR": "Something went wrong",
+    "DELETED": "Deleted successfully",
+    "CONFIRM_DELETE": "Are you sure you want to delete?"
+  },
+  "SETTINGS": {
+    "TITLE": "Menu Settings",
+    "NAME_AR": "Menu Name (AR)",
+    "NAME_EN": "Menu Name (EN)",
+    "LOGO": "Logo Upload",
+    "PHONE": "Phone",
+    "WHATSAPP": "WhatsApp",
+    "INSTAGRAM": "Instagram URL",
+    "FONT": "Font Family",
+    "FONT_DEFAULT": "Default",
+    "THEME_BG": "Background",
+    "THEME_CARD": "Card",
+    "THEME_TEXT": "Text",
+    "THEME_MUTED": "Muted Text",
+    "THEME_ACCENT": "Primary Accent",
+    "THEME_ACCENT2": "Secondary Accent",
+    "THEME_BORDER": "Border"
+  },
+  "CATEGORIES": {
+    "TITLE": "Categories",
+    "CREATE": "Create Category",
+    "EDIT": "Edit Category",
+    "NAME_AR": "Name (AR)",
+    "NAME_EN": "Name (EN)",
+    "DESC_AR": "Description (AR)",
+    "DESC_EN": "Description (EN)",
+    "IMAGE": "Image Upload"
+  },
+  "ITEMS": {
+    "TITLE": "Items",
+    "CREATE": "Create Item",
+    "EDIT": "Edit Item",
+    "NAME_AR": "Name (AR)",
+    "NAME_EN": "Name (EN)",
+    "DESC_AR": "Description (AR)",
+    "DESC_EN": "Description (EN)",
+    "IMAGE": "Image Upload",
+    "PRICE": "Price",
+    "CATEGORY": "Category"
+  },
+  "SIDEBAR": {
+    "HOME": "Dashboard Home",
+    "RESTAURANT": "Menu Settings",
+    "CATEGORIES": "Categories",
+    "ITEMS": "Items",
+    "LOGOUT": "Logout"
+  }
+}

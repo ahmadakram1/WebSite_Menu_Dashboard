@@ -1,0 +1,32 @@
+<mat-sidenav-container class="dashboard-container">
+  <mat-sidenav
+    #drawer
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)"
+  >
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button
+        mat-button
+        type="button"
+        *ngIf="isHandset$ | async"
+        (click)="drawer.toggle()"
+        aria-label="Toggle menu"
+      >
+        <mat-icon aria-hidden="true">menu</mat-icon>
+      </button>
+      <span>{{ 'DASHBOARD.TITLE' | t }}</span>
+      <span class="spacer"></span>
+      <button mat-stroked-button type="button" class="lang-toggle" (click)="toggleLanguage()">
+        {{ languageService.language === 'ar' ? 'EN' : 'AR' }}
+      </button>
+    </mat-toolbar>
+
+    <main class="dashboard-content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
