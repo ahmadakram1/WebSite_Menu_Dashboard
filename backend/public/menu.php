@@ -10,7 +10,7 @@ header('Access-Control-Allow-Headers: Authorization, Content-Type');
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
-
+/****/
 $restaurantId = $_GET['restaurant_id'] ?? null;
 if (!$restaurantId) {
     respond(['error' => 'Missing restaurant_id'], 400);
